@@ -21,7 +21,7 @@ public struct NatsSubscription {
 
 	func sub() -> String {
 		let group: () -> String = {
-			if self.queueGroup.characters.count > 0 {
+			if self.queueGroup.count > 0 {
 				return "\(self.queueGroup) "
 			}
 			return self.queueGroup
@@ -37,7 +37,7 @@ public struct NatsSubscription {
 			}
 			return ""
 		}
-		return "\(Proto.UNSUB.rawValue) \(id)\(wait)\r\n"
+        return "\(Proto.UNSUB.rawValue) \(id)\(String(describing: wait))\r\n"
 	}
 
 	mutating func counter() {
