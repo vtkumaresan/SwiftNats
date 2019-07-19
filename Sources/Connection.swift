@@ -243,8 +243,8 @@ open class Nats: NSObject, StreamDelegate {
 				return
 			}
 
-			guard let user = self.url?.user, let password = self.url?.password else {
-				throw NSError(domain: NSURLErrorDomain, code: 400, userInfo: [NSLocalizedDescriptionKey: "User/Password Required"])
+			guard let authToken = self.url?.user else {
+				throw NSError(domain: NSURLErrorDomain, code: 400, userInfo: [NSLocalizedDescriptionKey: "auth_token required"])
 			}
 
 			let config = [
@@ -254,8 +254,9 @@ open class Nats: NSObject, StreamDelegate {
 				"name": self.name,
 				"lang": self.lang,
 				"version": self.version,
-				"user": user,
-				"pass": password
+                "auth_token":authToken
+//                "user": user,
+//                "pass": password
 			] as [String : Any]
 
 			let configData = try JSONSerialization.data(withJSONObject: config, options: [])
